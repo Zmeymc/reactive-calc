@@ -7,7 +7,7 @@
     "reload_modules": "rm -rf node_modules/* && npm install",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "run": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -7,7 +7,10 @@ export default function reducer(state = Map(), action) {
             let messages = state.get(key);
 
             return state.set(key,(messages || []).concat(action.message));
+        case 'SET_LOADING':
+            return state.set('isLoading',action.value);
         default:
             return state
+
     }
 }

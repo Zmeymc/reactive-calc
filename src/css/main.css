@@ -2,4 +2,51 @@
     width: 54px;
     margin: 1px;
     padding: 0;
+    font-size: 30px;
+}
+.btn-large.double-width{
+    width: 109px;
+}
+.progress{
+    margin: 0;
+}
+
+.card{
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 2px;
+}
+
+.card,.progress {
+    background-color: #78909c;
+}
+
+.progress .indeterminate{
+    background-color: #ff9800;
+}
+
+.number{
+    background-color: #bdbdbd;
+    color: #000000;
+}
+
+.number:hover{
+    background-color: #adadad;
+}
+
+.b-operation{
+    background-color: #ff9800;
+}
+
+.b-operation:hover{
+    background-color: #ef8800;
+}
+
+.c-operation{
+    background-color: #adadad;
+    color: #000000;
+}
+
+.c-operation:hover{
+    background-color: #9d9d9d;
 }

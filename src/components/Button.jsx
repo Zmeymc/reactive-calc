@@ -7,6 +7,6 @@ export default class Button extends React.Component {
     }
 
     render() {
-        return <a className="btn-large waves-effect waves-light orange" onClick={(e)=>this.props.operation(e)}>{this.props.children}</a>
+        return <a className={"btn-large waves-effect waves-light " + this.props.style} onClick={(e)=>this.props.operation(e)}>{this.props.children}</a>
     }
 }
