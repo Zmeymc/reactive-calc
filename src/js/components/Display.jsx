@@ -6,17 +6,16 @@ import fitty from "fitty";
 export default class Display extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            value:'0'
+        this.state = {
+            value: '0'
         }
     }
 
     componentDidMount(){
+        this.setValue('0');
         store.subscribe(() => {
             const state = store.getState();
-            const calcData = state.get('calculationData');
-            if(calcData!==undefined)
-            this.setValue(calcData.value)
+            this.setValue(state.get('expression'));
         });
     }
 

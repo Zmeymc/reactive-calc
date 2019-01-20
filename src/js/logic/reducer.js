@@ -1,38 +1,28 @@
 import {Map} from "immutable";
-import * as calculator from "./calculator";
-import evaluate from "./api_logic";
+import {calculator} from "../index.jsx";
 
 export default function reducer(state = Map(), action) {
     try {
         console.log(state.toJSON());
-
-        let key, value;
         switch (action.type) {
             case 'SET_LOADING':
                 return state.set('isLoading', action.value);
             case 'SET_RESULT':
-                let data = calculator.getCalculationDataSkeleton();
-                data.value = action.value;
-                data.currentNumber = action.value;
-                return state.set('calculationData', data);
+                return state.set('expression', action.value);
             case 'INPUT':
-                key = 'calculationData';
-                switch (action.value) {
-                    case 'AC':
-                        value = 'clear';
-                        break;
-                    case '+/-':
-                        value = 'invert';
-                        break;
-                    case '=':
-                        state = state.set('isLoading', true);
-                        value = 'evaluate';
-                        break;
+                if(state.get('isLoading'))
+                    return state;
+                const result = calculator.input(action.value);
+                switch (result.state) {
+                    case 'OK':
+                        return state.set("expression", result.value);
+                    case 'EVALUATING':
+                        return state.set('isLoading', true);
+                    case 'ERROR':
                     default:
-                        value = action.value;
+                        return state.set('expression', result.value);
+
                 }
-                const calcucationData = state.get(key);
-                return state.set(key, calculator.input(calcucationData, value, evaluate));
             default:
                 return state
 

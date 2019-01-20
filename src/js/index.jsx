@@ -6,17 +6,28 @@ import { createStore } from 'redux'
 import './style_imports'
 import App from "./components/App.jsx";
 import reducer from "./logic/reducer";
+import Calculator from "./logic/calculator";
+
+
+const onEvaluated = (result) =>{
+    store.dispatch({
+        type: 'SET_RESULT',
+        value: result.value
+    });
+    store.dispatch({
+        type: 'SET_ERROR',
+        value: result.state === 'ERROR'
+    });
+    store.dispatch({
+        type: 'SET_LOADING',
+        value: false
+    });
+};
+
+
 
 export const store = createStore(reducer);
-
-store.dispatch({
-    type: 'ADD_MESSAGE',
-    message: 'Hello %Username%!'
-});
-store.dispatch({
-    type: 'ADD_MESSAGE',
-    message: 'I\'ll BECOME REAL COOL PRO CALCULATOR SOON'
-});
+export const calculator = new Calculator(onEvaluated);
 
 ReactDOM.render(
     <Provider store={store}>
