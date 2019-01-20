@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import './style_imports'
 import App from "./components/App.jsx";
-import reducer from "./reducer";
+import reducer from "./logic/reducer";
 
 export const store = createStore(reducer);
 

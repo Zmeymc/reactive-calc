@@ -1,20 +1,45 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+}
+.row {
+    margin: 0;
+    padding: 1px;
+}
 .btn-large {
-    width: 54px;
-    margin: 1px;
+    width: calc(25% - 2px);
+    margin: 0 1px;
     padding: 0;
     font-size: 30px;
 }
 .btn-large.double-width{
-    width: 109px;
+    width: calc(50% - 2px);
 }
+.display{
+    text-align: right;
+    padding: 0 2px;
+    margin: 0;
+    height: 50px;
+    color: #ffffff;
+}
+
+.display-text{
+    margin: 0;
+    font-size: 46px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
 .progress{
     margin: 0;
 }
-
+.button-block{
+    margin: 1px 0;
+}
 .card{
-    width: -moz-fit-content;
-    width: fit-content;
+    width: 100%;
     padding: 2px;
+    border-radius: 8px;
 }
 
 .card,.progress {

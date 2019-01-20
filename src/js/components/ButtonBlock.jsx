@@ -10,17 +10,17 @@ export default class ButtonBlock extends React.Component {
 
     input(symbol){
         console.log(symbol);
+
         store.dispatch({
-            type: 'SET_LOADING',
-            value: symbol % 2
+            type: 'INPUT',
+            value: symbol
         });
     }
 
     render() {
-        return <Fragment>
-
+        return <div className='button-block'>
         {this.props.buttons.map((row)=>
-            (<Fragment key={row.map(b => b.value).join('')}> {
+            (<div className='row' key={row.map(b => b.value).join('')}> {
                     row.map(b => (
                             <Button
                                 key={b.value}
@@ -29,9 +29,8 @@ export default class ButtonBlock extends React.Component {
                                 {b.value}
                             </Button>
                         ))}
-                    <br/>
-                </Fragment>))
+                </div>))
                 }
-         </Fragment>
+         </div>
         }
 }

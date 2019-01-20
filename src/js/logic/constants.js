@@ -32,7 +32,7 @@ export const ButtonDefinitions= [
         },
         {
             style:'b-operation',
-            value:'X'
+            value:'x'
         }
     ],
     [
