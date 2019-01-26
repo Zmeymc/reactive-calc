@@ -8,10 +8,12 @@ class Button extends React.Component {
     }
 
     render() {
-        return <a className={"btn-large waves-effect waves-light " + this.props.style}
-                  onClick={(e)=>this.props.onInput(this.props.children)}>
-            {this.props.children}
-        </a>
+        return <div className={"btn-cell " + this.props.style}>
+            <button className={"btn waves-effect waves-light " + this.props.style}
+                      onClick={(e)=>this.props.onInput(this.props.children)}>
+                {this.props.children}
+            </button>
+        </div>
     }
 }
 
@@ -23,7 +25,5 @@ function mapDispatchToProps (dispatch) {
             })
         }
     }
-};
-
-
+}
 export default connect(null,mapDispatchToProps)(Button)

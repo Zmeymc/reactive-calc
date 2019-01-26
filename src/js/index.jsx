@@ -13,6 +13,7 @@ import HistoryManager from "./logic/historyManager";
 const initialState = {
     history:{
         isOpened:false,
+        isLoading:[],
         values:[]
     },
     expression:{
