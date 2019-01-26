@@ -7,6 +7,7 @@ import './style_imports'
 import App from "./components/App.jsx";
 import reducer from "./logic/reducer";
 import Calculator from "./logic/calculator";
+import HistoryManager from "./logic/historyManager";
 
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
 
 export const store = createStore(reducer,initialState);
 export const calculator = new Calculator();
+export const history = new HistoryManager(store);
 
 ReactDOM.render(
     <Provider store={store}>

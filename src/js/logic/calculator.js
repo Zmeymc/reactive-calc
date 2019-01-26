@@ -10,6 +10,7 @@ export default class Calculator {
 
 
     input(symbol) {
+        const prevValue = this.__state.value;
         let requestState = 'OK';
         try {
             const term = this.parseSymbol(symbol);
@@ -35,6 +36,7 @@ export default class Calculator {
             this.__state = {state: -1, value: 'Error'};
 
         return {
+            prevValue: prevValue,
             state:requestState,
             value:requestState==="OK"?
                 this.convertTerms(this.__state.value):

@@ -1,4 +1,4 @@
-import {calculator} from "../index.jsx";
+import {calculator,history} from "../index.jsx";
 
 export default function reducer(state, action) {
     switch (action.type) {
@@ -12,13 +12,15 @@ export default function reducer(state, action) {
                 ...state,
                 isLoading: action.value
             };
-        case 'SET_RESULT':
-            return {
-                ...state,
-                expression: action.value
-            };
+
+        case 'GET_HISTORY':
+            history.getHistory();
+            return state;
+
         case 'INPUT':
             const result = calculator.input(action.value);
+            if(action.value==='=')
+                history.pushHistory(result.prevValue+'='+result.value);
             return {
                 ...state,
                 expression: result
