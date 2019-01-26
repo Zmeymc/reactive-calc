@@ -10,10 +10,8 @@ class HistoryBlock extends React.Component {
 
 
     render() {
-        console.log('HB rendered')
-        const {historyIsOpened} = this.props;
         return <div className={'history'}>
-
+            this.props.history.map(h=><h2 key={h}>h</h2>)
         </div>
     }
 }
@@ -21,7 +19,7 @@ class HistoryBlock extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        historyIsOpened: state.historyIsOpened
+        history: state.history.values
     }
 }
 
@@ -31,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({type: 'TOGGLE_HISTORY' })
         }
     }
-}
+};
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(HistoryBlock)

@@ -1,7 +1,7 @@
 const apiEndpoint = 'http://172.18.0.2:9200';
-const storageName = 'calc_history'
+const storageName = 'calc_history';
 
-const historySkeleton = {values:[]}
+const historySkeleton = {values:[]};
 
 const pushBody = (expression) => {
     return {
@@ -10,7 +10,8 @@ const pushBody = (expression) => {
             params: {"value": expression}
         }
     }
-}
+};
+
 
 export function getHistory(uuid) {
     const url = [apiEndpoint,storageName,'doc',uuid].join('/');
@@ -25,7 +26,7 @@ export function getHistory(uuid) {
                 }
             }
         };
-        xhr.open('GET', url, false);
+        xhr.open('GET', url, true);
         xhr.setRequestHeader('Content-Type','application/json');
         xhr.send();
     });
@@ -46,7 +47,7 @@ export function pushHistory(uuid,expression) {
                 }
             }
         };
-        xhr.open('POST', url, false);
+        xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-Type','application/json');
         xhr.send(JSON.stringify(pushBody(expression)));
     });
@@ -68,7 +69,7 @@ export function createHistory() {
                 }
             }
         };
-        xhr.open('POST', url, false);
+        xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-Type','application/json');
         xhr.send(JSON.stringify(historySkeleton));
     });

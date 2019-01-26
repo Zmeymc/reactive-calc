@@ -10,12 +10,14 @@ export default class HistoryManager {
 
     async pushHistory(expression){
         const response = await api.pushHistory(await this.getIdentifier(),expression);
-        this.store.dispatch({type:'SET_HISTORY',value:response})
+        this.store.dispatch({type:'ADD_HISTORY',value:response})
     }
+
 
     async getHistory(){
         const response = await api.getHistory(this.getIdentifier());
-        this.store.dispatch({type:'SET_HISTORY',value:response})
+        this.store.dispatch({type:'UPDATE_HISTORY',value:response});
+        this.store.dispatch({type:'LOADING_HISTORY',value:false});
     }
 
 
@@ -24,6 +26,7 @@ export default class HistoryManager {
         this.identifier = JSON.parse(response)._id;
         sessions.putCookie('id', this.identifier);
     }
+
 
     async getIdentifier() {
         if (!this.identifier)

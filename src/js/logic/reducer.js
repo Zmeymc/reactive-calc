@@ -7,15 +7,30 @@ export default function reducer(state, action) {
                 ...state,
                 historyIsOpened: !state.historyIsOpened
             };
-        case 'SET_LOADING':
+        case 'LOADING_HISTORY':
             return {
                 ...state,
-                isLoading: action.value
+                isLoadingHistory: action.value
             };
 
-        case 'GET_HISTORY':
+        case 'LOAD_HISTORY':
             history.getHistory();
-            return state;
+            return  {
+                ...state,
+                isLoadingHistory: true
+            };
+
+        case 'UPDATE_HISTORY':
+            return {
+                ...state,
+                history: action.value
+            };
+
+        case 'ADD_HISTORY':
+            return {
+                ...state,
+                history: state.history.concat(action.value)
+            };
 
         case 'INPUT':
             const result = calculator.input(action.value);
