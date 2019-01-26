@@ -1,34 +1,37 @@
 import React, {} from "react";
-import {store} from "../index.jsx";
 import fitty from "fitty";
+import {connect} from "react-redux";
 
 
-export default class Display extends React.Component {
+class Display extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            value: '0'
-        }
     }
 
-    componentDidMount(){
-        this.setValue('0');
-        store.subscribe(() => {
-            const state = store.getState();
-            this.setValue(state.get('expression'));
-        });
-    }
 
-    setValue(value){
-        this.setState({value});
-        fitty('#calcValue',{ maxSize: 50}).forEach(f=>f.fit());
-
+    fit() {
+        fitty('#calcValue', {maxSize: 50}).forEach(f => f.fit());
     }
 
 
     render() {
+        console.log('D rendered')
         return <div className='row display'>
-                    <h2 id='calcValue' className='display-text'>{this.state.value}</h2>
+            <h2 id='calcValue' className='display-text'>{this.props.expression}</h2>
         </div>
     }
+
+    componentDidUpdate() {
+        this.fit();
+    }
 }
+
+function mapStateToProps (state) {
+    return {
+        expression: state.expression.value
+    }
+}
+
+
+
+export default connect(mapStateToProps)(Display)

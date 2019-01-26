@@ -75,3 +75,21 @@ body {
 .c-operation:hover{
     background-color: #9d9d9d;
 }
+
+.history{
+    width: calc(100% - 2px);
+    height: 330px;
+}
+
+
+.toggle_history{
+    margin: 0 1px;
+    width: calc(100% - 2px);
+    background-color: #78909c;
+    box-shadow: unset;
+}
+
+.toggle_history:hover{
+    background-color: #78909c;
+    box-shadow: unset;
+}

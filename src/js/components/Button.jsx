@@ -1,12 +1,29 @@
 import React from "react";
+import {connect} from "react-redux";
 
 
-export default class Button extends React.Component {
+class Button extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        return <a className={"btn-large waves-effect waves-light " + this.props.style} onClick={(e)=>this.props.operation(e)}>{this.props.children}</a>
+        return <a className={"btn-large waves-effect waves-light " + this.props.style}
+                  onClick={(e)=>this.props.onInput(this.props.children)}>
+            {this.props.children}
+        </a>
     }
 }
+
+function mapDispatchToProps (dispatch) {
+    return {
+        onInput: (val) => {
+            dispatch({type: 'INPUT',
+                value:val
+            })
+        }
+    }
+};
+
+
+export default connect(null,mapDispatchToProps)(Button)

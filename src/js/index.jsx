@@ -9,32 +9,22 @@ import reducer from "./logic/reducer";
 import Calculator from "./logic/calculator";
 
 
-const onEvaluated = (result) =>{
-    store.dispatch({
-        type: 'SET_RESULT',
-        value: result.value
-    });
-    store.dispatch({
-        type: 'SET_ERROR',
-        value: result.state === 'ERROR'
-    });
-    store.dispatch({
-        type: 'SET_LOADING',
-        value: false
-    });
+const initialState = {
+    historyIsOpened:false,
+    expression:{
+        state:'OK',
+        value: '0'
+    }
+
 };
 
-
-
-export const store = createStore(reducer);
-export const calculator = new Calculator(onEvaluated);
+export const store = createStore(reducer,initialState);
+export const calculator = new Calculator();
 
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <div>
                 <Route exact path="/" component={App} />
-            </div>
         </BrowserRouter>
     </Provider>,
     document.getElementById('app')

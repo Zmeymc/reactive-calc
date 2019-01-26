@@ -1,23 +1,13 @@
 import StateMachine from "./statemachine";
 import * as constants from "./constants";
-import * as api from "./api";
 
 
 export default class Calculator {
-    constructor(onEvaluatedCallback) {
+    constructor() {
         this.SM = new StateMachine(constants.calculatorStates);
         this.__state = {state: 0, value: '0'};
-        this.onEvaluatedCallback = onEvaluatedCallback;
     }
 
-    onEvaluationRecieved(result){
-        this.__state = {state: 0, value: '0'};
-        if(result.state === 'OK')
-            result.value.split('').forEach((s)=>this.input(s));
-        else
-            this.__state = {state: 0, value: 'E'};
-        this.onEvaluatedCallback({state:result.state,value:this.__state.value});
-    }
 
     input(symbol) {
         let requestState = 'OK';
@@ -25,35 +15,13 @@ export default class Calculator {
             const term = this.parseSymbol(symbol);
             switch (term) {
                 case 'clear':
-                    this.__state = {state: 0, value: '0'};
+                    this.clear();
                     break;
                 case 'evaluate':
-                    api.evaluate(this.__state.value,(result) => this.onEvaluationRecieved(result));
-                    requestState = 'EVALUATING';
+                    requestState = this.evaluate();
                     break;
                 case 'invert':
-                    const regex = /([\+\-\*\/]+)([^\+\-\*\/]*)$/;
-                    const lastSymbols = this.__state.value.match(regex);
-                    if (lastSymbols == null)
-                        this.__state.value = '-' + this.__state.value;
-                    else if (lastSymbols.index == 0)
-                        this.__state.value = this.__state.value.substr(1);
-                    else {
-                        let termPos = lastSymbols[1].indexOf('-');
-                        let arr = this.__state.value.split('');
-                        if (termPos < 0) {
-                            termPos = lastSymbols[1].indexOf('+');
-                            if (termPos < 0)
-                                arr.splice(lastSymbols.index + 1, 0, '-');
-                            else
-                                arr[lastSymbols.index + termPos] = '-';
-                        } else if (lastSymbols[1].length === 1)
-                            arr[lastSymbols.index + termPos] = '+';
-                        else
-                            arr[lastSymbols.index + termPos] = '';
-                        this.__state.value = arr.join('');
-                    }
-
+                    this.invert();
                     break;
                 default:
                     this.__state = this.SM.nextState(this.__state, term);
@@ -61,12 +29,16 @@ export default class Calculator {
             }
         }
         catch (e) {
-            console.log(e);
             requestState = 'ERROR';
         }
+        if(requestState ==='ERROR')
+            this.__state = {state: -1, value: 'Error'};
+
         return {
             state:requestState,
-            value:this.convertTerms(this.__state.value)
+            value:requestState==="OK"?
+                this.convertTerms(this.__state.value):
+                this.__state.value
         };
     }
 
@@ -77,6 +49,8 @@ export default class Calculator {
                 return '/';
             case 'x':
                 return '*';
+            case ',':
+                return'.';
             case 'AC':
                 return 'clear';
             case '=':
@@ -96,7 +70,50 @@ export default class Calculator {
     convertTerms(terms) {
         return terms.split('/').join('÷')
             .split('*').join('x')
+            .split('.').join(',')
     }
 
+
+    clear(){
+        this.__state = {state: 0, value: '0'};
+    }
+
+
+    evaluate(){
+        const result = eval(this.__state.value.split('%').join('*0.01'));
+        if(isFinite(result)) {
+            this.__state = {state: result ? 1 : 0, value: result.toString()};
+            return 'OK';
+        }
+        else {
+            this.__state = {state: -1, value: 'Error'};
+            return 'ERROR';
+        }
+    }
+
+    invert(){
+        const regex = /([\+\-\*\/]+)([^\+\-\*\/]*)$/;
+        const lastSymbols = this.__state.value.match(regex);
+        if (lastSymbols == null)
+            this.__state.value = '-' + this.__state.value;
+        else if (lastSymbols.index == 0)
+            this.__state.value = this.__state.value.substr(1);
+        else {
+            let termPos = lastSymbols[1].indexOf('-');
+            let arr = this.__state.value.split('');
+            if (termPos < 0) {
+                termPos = lastSymbols[1].indexOf('+');
+                if (termPos < 0)
+                    arr.splice(lastSymbols.index + 1, 0, '-');
+                else
+                    arr[lastSymbols.index + termPos] = '-';
+            } else if (lastSymbols[1].length === 1)
+                arr[lastSymbols.index + termPos] = '+';
+            else
+                arr[lastSymbols.index + termPos] = '';
+            this.__state.value = arr.join('');
+        }
+
+    }
 
 }
