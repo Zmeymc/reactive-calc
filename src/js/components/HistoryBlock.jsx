@@ -10,9 +10,9 @@ class HistoryBlock extends React.Component {
 
 
     render() {
-        return <div className={'history'}>
-            this.props.history.map(h=><h2 key={h}>h</h2>)
-        </div>
+        return <ul className="history">
+            {this.props.history.reverse().map(h=>( <li className="history-item" key={h}>{h}</li>))}
+            </ul>
     }
 }
 

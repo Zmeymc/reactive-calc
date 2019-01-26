@@ -11,7 +11,10 @@ import HistoryManager from "./logic/historyManager";
 
 
 const initialState = {
-    historyIsOpened:false,
+    history:{
+        isOpened:false,
+        values:[]
+    },
     expression:{
         state:'OK',
         value: '0'

@@ -11,6 +11,9 @@ class Calculator extends React.Component {
         super(props);
 
     }
+    componentDidMount() {
+        this.props.onGetHistory();
+    }
 
     render() {
         return <div className='card'>
@@ -35,8 +38,18 @@ class Calculator extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        historyIsOpened: state.historyIsOpened
+        historyIsOpened: state.history.isOpened
     }
 }
 
-export default connect(mapStateToProps)(Calculator)
+
+function mapDispatchToProps (dispatch) {
+    return {
+        onGetHistory: () => {
+            dispatch({type: 'LOAD_HISTORY' })
+        }
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator)

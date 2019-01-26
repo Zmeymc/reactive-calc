@@ -16,12 +16,10 @@ class HistoryToggler extends React.Component {
     }
 
     render() {
-        console.log('HT rendered')
-        const {historyIsOpened} = this.props;
-        return <div className={'row ' + (historyIsOpened ? 'active':'')}>
+        return <div className={'row ' + (this.props.isOpened ? 'active':'')}>
             <a className={"btn-small waves-effect waves-light toggle_history"}
                onClick={()=>this.props.onToggleHistory()}>
-                <i className='material-icons dp48'>{historyIsOpened?'expand_more':'expand_less'}</i>
+                <i className='material-icons dp48'>{this.props.isOpened?'expand_more':'expand_less'}</i>
             </a>
         </div>
     }
@@ -30,7 +28,7 @@ class HistoryToggler extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        historyIsOpened: state.historyIsOpened
+        isOpened: state.history.isOpened
     }
 }
 

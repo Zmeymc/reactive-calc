@@ -15,8 +15,9 @@ export default class HistoryManager {
 
 
     async getHistory(){
-        const response = await api.getHistory(this.getIdentifier());
-        this.store.dispatch({type:'UPDATE_HISTORY',value:response});
+        const response = await api.getHistory(await this.getIdentifier());
+        const values = JSON.parse(response)._source.values;
+        this.store.dispatch({type:'UPDATE_HISTORY',value:values});
         this.store.dispatch({type:'LOADING_HISTORY',value:false});
     }
 

@@ -79,6 +79,15 @@ body {
 .history{
     width: calc(100% - 2px);
     height: 330px;
+    overflow-y: auto;
+}
+
+.history-item{
+    text-align: center;
+    font-size: 24px;
+    padding: 10px 5px;
+    color: #fff;
+    overflow-wrap: break-word;
 }
 
 
