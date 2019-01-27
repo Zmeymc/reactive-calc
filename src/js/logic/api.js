@@ -1,4 +1,4 @@
-const apiEndpoint = 'http://'+document.location.origin+':9200';
+const apiEndpoint = 'http://'+document.location.hostname+':9200';
 const storageName = 'calc_history';
 
 const historySkeleton = {values:[]};
