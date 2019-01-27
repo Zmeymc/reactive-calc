@@ -8,12 +8,12 @@ export default class HistoryManager {
         this.identifier = sessions.getCookie('id');
     }
 
-    async setLoading(method,value){
-        await this.store.dispatch({type:value?'START_LOADING':'STOP_LOADING',value:method});
+    setLoading(method,value){
+        this.store.dispatch({type:value?'START_LOADING':'STOP_LOADING',value:method});
     }
 
-    async pushError(msg, description){
-        await this.store.dispatch({type: 'ADD_ERROR', value: msg});
+    pushError(msg, description){
+        this.store.dispatch({type: 'ADD_ERROR', value: msg});
         if(description)
             console.log(description);
     }
@@ -24,14 +24,10 @@ export default class HistoryManager {
         try {
 
             const id = await this.getIdentifier();
-            if (!id) {
-                this.pushError(Errors.GetIdentifier);
-                return;
-            }
             let error;
-            const response = await api.pushHistory(id, expression)
+            await api.pushHistory(id, expression)
                 .catch((e) => { error = e; });
-            if(error){
+            if(error!==undefined){
                 this.pushError(Errors.PushHistory);
                 return;
             }
@@ -50,9 +46,10 @@ export default class HistoryManager {
         await this.setLoading('getHistory',true);
         try {
             let error;
-            const response = await api.getHistory(await this.getIdentifier())
+            const id = await this.getIdentifier();
+            const response = await api.getHistory(id)
                 .catch((e) => { error = e; });
-            if(error){
+            if(error!==undefined){
                 this.pushError(Errors.GetHistory);
                 return;
             }
@@ -74,7 +71,7 @@ export default class HistoryManager {
             let error;
             const response = await api.createHistory()
                 .catch((e) => { error = e; });
-            if (error) {
+            if (error!==undefined) {
                 this.pushError(Errors.GetIdentifier);
                 return;
             }

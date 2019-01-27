@@ -21,7 +21,7 @@ body {
     border-radius: 8px;
     height: 100%;
     background-color: #78909c;
-    min-height: 280px;
+    min-height: 320px;
     min-width: 280px;
 }
 
@@ -31,7 +31,27 @@ body {
 }
 
 /*Base Block*/
+/*VC*/
+.vc-outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 
+.vc-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.vc-inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*VC*/
 /*Button Block*/
 
 .button-block{
@@ -173,6 +193,10 @@ body {
 .toggle_history:hover{
     background-color: #78909c;
     box-shadow: unset;
+}
+
+.spinner-layer{
+    border-color: #58707c;
 }
 
 /*History Block*/

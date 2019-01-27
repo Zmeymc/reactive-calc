@@ -1,6 +1,8 @@
 import React, {Fragment} from "react";
 import connect from "react-redux/es/connect/connect";
 import HistoryToggler from "./HistoryToggler.jsx";
+import Loader from "./Loader.jsx";
+import VerticalCentered from "./VerticalCentered.jsx";
 
 
 class HistoryBlock extends React.Component {
@@ -15,13 +17,27 @@ class HistoryBlock extends React.Component {
             <div className="history fake"/>
         <div className={this.props.isOpened ? "history active" : "history"}>
             <HistoryToggler/>
-            {this.props.history.length === 0 &&
-                <span className={'hint'}>Нет вычислений</span>}
-            <table className={"striped"}>
-                <tbody>
-                {this.props.history.slice().reverse().map((h,i) => (<tr key={i}><td className="history-item">{h}</td></tr>))}
-                </tbody>
-            </table>
+            {this.props.isLoading ?
+                <VerticalCentered>
+                    <Loader/>
+                </VerticalCentered>
+                :
+                <Fragment>
+                    {
+                        this.props.history.length === 0 &&
+                        <VerticalCentered>
+                            <span className={'hint'}>Нет вычислений</span>
+                        </VerticalCentered>
+                    }
+                    <table className={"striped"}>
+                        <tbody>
+                        {this.props.history.slice().reverse().map((h, i) => (<tr key={i}>
+                            <td className="history-item">{h}</td>
+                        </tr>))}
+                        </tbody>
+                    </table>
+                </Fragment>
+            }
         </div>
         </Fragment>
     }
@@ -31,7 +47,8 @@ class HistoryBlock extends React.Component {
 function mapStateToProps(state) {
     return {
         history: state.history.values,
-        isOpened: state.history.isOpened
+        isOpened: state.history.isOpened,
+        isLoading: state.loading.length > 0
     }
 }
 

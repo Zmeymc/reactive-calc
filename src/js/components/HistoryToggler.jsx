@@ -9,11 +9,6 @@ class HistoryToggler extends React.Component {
 
     }
 
-    toggle(){
-        this.props.dispatch({
-            type: 'TOGGLE_HISTORY'
-        });
-    }
 
     render() {return <a className={"btn-small waves-effect waves-light toggle_history"}
                onClick={()=>this.props.onToggleHistory()}>

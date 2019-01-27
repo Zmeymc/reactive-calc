@@ -1,3 +1,4 @@
+import * as Materialize from "materialize-css";
 
 export default function reducer(state, action) {
     let loading;
@@ -51,7 +52,7 @@ export default function reducer(state, action) {
             };
 
         case 'ADD_ERROR':
-            console.log(action.value);
+            Materialize.toast({html: action.value},500);
             return state;
 
         case 'UPDATE_EXPRESSION':
