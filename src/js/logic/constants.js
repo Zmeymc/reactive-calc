@@ -236,3 +236,10 @@ export const calculatorStates = {
     }
 
 };
+
+export const Errors = {
+    GetIdentifier : 'Не удалось получить идентификатор клиента',
+    GetHistory : 'Не удалось получить историю вычислений',
+    PushHistory : 'Не удалось отправить историю вычислений',
+    Unknown : 'Произошла неизвестная ошибка',
+};

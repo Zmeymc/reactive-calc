@@ -15,7 +15,6 @@ class Display extends React.Component {
 
 
     render() {
-        console.log('D rendered')
         return <div className='row display'>
             <h2 id='calcValue' className='display-text'>{this.props.expression}</h2>
         </div>

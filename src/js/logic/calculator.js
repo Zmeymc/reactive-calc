@@ -1,15 +1,19 @@
 import StateMachine from "./statemachine";
 import * as constants from "./constants";
+import historyManager from "./historyManager";
 
 
 export default class Calculator {
-    constructor() {
+    constructor(store) {
         this.SM = new StateMachine(constants.calculatorStates);
+        this.store = store;
         this.__state = {state: 0, value: '0'};
+        this.HM = new historyManager(store);
+        this.HM.getHistory();
     }
 
 
-    input(symbol) {
+    async input(symbol) {
         const prevValue = this.__state.value;
         let requestState = 'OK';
         try {
@@ -19,7 +23,9 @@ export default class Calculator {
                     this.clear();
                     break;
                 case 'evaluate':
+                    const expression = this.__state.value;
                     requestState = this.evaluate();
+                    this.HM.pushHistory(`${expression}=${this.__state.value}`);
                     break;
                 case 'invert':
                     this.invert();
@@ -35,15 +41,18 @@ export default class Calculator {
         if(requestState ==='ERROR')
             this.__state = {state: -1, value: 'Error'};
 
-        return {
+        this.updateExpression({
             prevValue: prevValue,
             state:requestState,
             value:requestState==="OK"?
                 this.convertTerms(this.__state.value):
                 this.__state.value
-        };
+        });
     }
 
+    updateExpression(expression){
+        this.store.dispatch({type:'UPDATE_EXPRESSION',value:expression});
+    }
 
     parseSymbol(symbol) {
         switch (symbol) {

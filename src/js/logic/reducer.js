@@ -1,9 +1,8 @@
-import {calculator,history} from "../index.jsx";
 
 export default function reducer(state, action) {
-    console.log(state)
-    console.log(action)
+    let loading;
     switch (action.type) {
+
         case 'TOGGLE_HISTORY':
             return {
                 ...state,
@@ -12,23 +11,26 @@ export default function reducer(state, action) {
                     isOpened: !state.history.isOpened,
                 }
             };
-        case 'LOADING_HISTORY':
+
+        case 'START_LOADING':
+            loading = state.loading;
+            if(loading.includes(action.value))
+                return state;
+            loading.push(action.value);
             return {
                 ...state,
-                history:{
-                    ...state.history,
-                    isLoading: action.value,
-                }
+                loading: loading
             };
 
-        case 'LOAD_HISTORY':
-            history.getHistory();
+        case 'STOP_LOADING':
+            loading = state.loading;
+            const index = loading.indexOf(action.value);
+            if(index<0)
+                return state;
+            loading.splice(index, 1);
             return {
                 ...state,
-                history:{
-                    ...state.history,
-                    isLoading: true,
-                }
+                loading: loading
             };
 
         case 'UPDATE_HISTORY':
@@ -39,25 +41,25 @@ export default function reducer(state, action) {
                     values: action.value,
                 }
             };
-
-        case 'INPUT':
-            const result = calculator.input(action.value);
-            if(action.value==='=') {
-                const newHistory = result.prevValue+'='+result.value
-                history.pushHistory(newHistory);
-                return {
-                    ...state,
-                    expression: result,
-                    history:{
-                        ...state.history,
-                        values: state.history.values.concat(newHistory),
-                    }
-                };
-            }
+        case 'ADD_HISTORY':
             return {
                 ...state,
-                expression: result,
+                history:{
+                    ...state.history,
+                    values: state.history.values.concat(action.value),
+                }
             };
+
+        case 'ADD_ERROR':
+            console.log(action.value);
+            return state;
+
+        case 'UPDATE_EXPRESSION':
+           return {
+                    ...state,
+                    expression: action.value,
+
+                };
         default:
             return state
     }

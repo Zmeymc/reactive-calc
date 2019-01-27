@@ -27,13 +27,6 @@ class Calculator extends React.Component {
 }
 
 
-function mapStateToProps(state) {
-    return {
-        historyIsOpened: state.history.isOpened
-    }
-}
-
-
 function mapDispatchToProps(dispatch) {
     return {
         onGetHistory: () => {
@@ -41,4 +34,4 @@ function mapDispatchToProps(dispatch) {
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Calculator)
+export default connect(null, mapDispatchToProps)(Calculator)

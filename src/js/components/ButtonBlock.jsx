@@ -1,7 +1,6 @@
-import React, {Fragment} from "react";
+import React from "react";
+import {calculator} from "../index.jsx";
 import Button from "./Button.jsx";
-import {store} from "../index.jsx";
-
 
 export default class ButtonBlock extends React.Component {
     constructor(props) {
@@ -9,13 +8,9 @@ export default class ButtonBlock extends React.Component {
     }
 
     input(symbol){
-        console.log(symbol);
-
-        store.dispatch({
-            type: 'INPUT',
-            value: symbol
-        });
+        calculator.input(symbol);
     }
+
 
     render() {
         return <div className='button-block'>
@@ -25,7 +20,7 @@ export default class ButtonBlock extends React.Component {
                             <Button
                                 key={b.value}
                                 style={b.style}
-                                operation={() => this.input(b.value)}>
+                                onClick={()=>this.input(b.value)}>
                                 {b.value}
                             </Button>
                         ))}
