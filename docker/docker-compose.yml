@@ -1,0 +1,11 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch
+    ports:
+         - 9200:9200
+         - 9300:9300
+  nodejs:
+    image: nodejs
+    ports:
+          - 8080:8080
