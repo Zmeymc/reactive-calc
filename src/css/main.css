@@ -33,8 +33,8 @@ body {
 /*Base Block*/
 /*VC*/
 .vc-outer {
-    display: table;
     position: absolute;
+    display: table;
     top: 0;
     left: 0;
     height: 100%;
@@ -91,7 +91,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 0;
-    font-size: 30px;
+    font-size: 45px;
     -webkit-flex-basis: 25%;
     flex-basis:  25%;
 }
@@ -187,7 +187,7 @@ body {
     box-shadow: unset;
 
     transition-property: all;
-    transition-duration: 1s;
+    transition-duration: 500ms;
 }
 
 .toggle_history:hover{
@@ -200,3 +200,42 @@ body {
 }
 
 /*History Block*/
+/*History Button Block*/
+.toggle_icon {
+    width: 50px;
+    height: 30px;
+    margin:  auto;
+}
+
+.toggle_icon>.stick{
+    position: sticky;
+    top: 13px;
+    width: 10px;
+    height: 2px;
+    background-color: #fff;
+    transition-property: transform;
+    transition-duration: 500ms;
+    border-radius: 8px;
+}
+
+.toggle_icon>.stick.left{
+    transform: rotate(-45deg);
+    margin-left: 17px;
+
+}
+
+.toggle_icon>.stick.right{
+    transform: rotate(45deg);
+    margin-right: 17px;
+}
+
+.toggle_icon.opened>.stick.left{
+    transform: rotate(45deg);
+}
+
+.toggle_icon.opened>.stick.right{
+    transform: rotate(-45deg);
+}
+
+
+/*History Button Block*/

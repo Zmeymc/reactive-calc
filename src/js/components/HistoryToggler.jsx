@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 
 
-
 class HistoryToggler extends React.Component {
     constructor(props) {
         super(props);
@@ -10,22 +9,25 @@ class HistoryToggler extends React.Component {
     }
 
 
-    render() {return <a className={"btn-small waves-effect waves-light toggle_history"}
-               onClick={()=>this.props.onToggleHistory()}>
-                <i className='material-icons dp48'>{this.props.isOpened?'expand_more':'expand_less'}</i>
-            </a>
+    render() {
+        return <a className={'btn-small waves-effect waves-light toggle_history'}  onClick={() => this.props.onToggleHistory()}>
+        <div className={this.props.isOpened ? 'toggle_icon opened' : 'toggle_icon'}>
+            <div className={'stick left'}/>
+            <div className={'stick right'}/>
+        </div>
+        </a>
     }
 }
 
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         isOpened: state.history.isOpened
     }
 }
 
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
     return {
         onToggleHistory: () => {
             dispatch({type: 'TOGGLE_HISTORY'})
@@ -33,4 +35,4 @@ function mapDispatchToProps (dispatch) {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(HistoryToggler)
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryToggler)
