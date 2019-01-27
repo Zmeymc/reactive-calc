@@ -7,7 +7,7 @@
     "clean":"rm -rf dist/*",
     "clean_modules":"rm -rf node_modules/*",
     "reload_modules": "npm run clean_modules && npm install",
-    "build:html": "cp src/html/* dist/",
+    "build:html": "mkdir dist && cp src/html/* dist/",
     "build:webpack": "webpack --mode production",
     "build": "npm run build:html && npm run build:webpack",
     "start": "npm run build:html && webpack-dev-server --mode development --open",
