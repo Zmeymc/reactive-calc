@@ -1,5 +1,6 @@
-import React from "react";
+import React, {Fragment} from "react";
 import connect from "react-redux/es/connect/connect";
+import HistoryToggler from "./HistoryToggler.jsx";
 
 
 class HistoryBlock extends React.Component {
@@ -10,26 +11,37 @@ class HistoryBlock extends React.Component {
 
 
     render() {
-        return <ul className="history">
-            {this.props.history.reverse().map(h=>( <li className="history-item" key={h}>{h}</li>))}
-            </ul>
+        return <Fragment>
+            <div className="history fake"/>
+        <div className={this.props.isOpened ? "history active" : "history"}>
+            <HistoryToggler/>
+            {this.props.history.length === 0 &&
+                <span className={'hint'}>Нет вычислений</span>}
+            <table className={"striped"}>
+                <tbody>
+                {this.props.history.slice().reverse().map((h,i) => (<tr key={i}><td className="history-item">{h}</td></tr>))}
+                </tbody>
+            </table>
+        </div>
+        </Fragment>
     }
 }
 
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
-        history: state.history.values
+        history: state.history.values,
+        isOpened: state.history.isOpened
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onToggleHistory: () => {
-            dispatch({type: 'TOGGLE_HISTORY' })
+            dispatch({type: 'TOGGLE_HISTORY'})
         }
     }
 };
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(HistoryBlock)
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryBlock)

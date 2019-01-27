@@ -15,13 +15,10 @@ class HistoryToggler extends React.Component {
         });
     }
 
-    render() {
-        return <div className={'row ' + (this.props.isOpened ? 'active':'')}>
-            <a className={"btn-small waves-effect waves-light toggle_history"}
+    render() {return <a className={"btn-small waves-effect waves-light toggle_history"}
                onClick={()=>this.props.onToggleHistory()}>
                 <i className='material-icons dp48'>{this.props.isOpened?'expand_more':'expand_less'}</i>
             </a>
-        </div>
     }
 }
 
