@@ -5,6 +5,7 @@ import Button from "./Button.jsx";
 export default class ButtonBlock extends React.Component {
     constructor(props) {
         super(props);
+        document.onkeydown = (key)=>this.input(key.key === 'Enter'? '=':key.key);
     }
 
     input(symbol){

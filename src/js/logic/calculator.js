@@ -4,8 +4,9 @@ import historyManager from "./historyManager";
 
 
 export default class Calculator {
-    constructor(store) {
+    constructor(store, precisionMultiplier = 10) {
         this.SM = new StateMachine(constants.calculatorStates);
+        this.precision = 10 ** precisionMultiplier;
         this.store = store;
         this.__state = {state: 0, value: '0'};
         this.HM = new historyManager(store);
@@ -39,7 +40,7 @@ export default class Calculator {
             requestState = 'ERROR';
         }
         if(requestState ==='ERROR')
-            this.__state = {state: -1, value: 'Error'};
+            this.__state = {state: 9, value: 'Error'};
 
         this.updateExpression({
             prevValue: prevValue,
@@ -72,7 +73,7 @@ export default class Calculator {
         if (Array.apply(null, {length: 10})
             .map(Number.call, Number)
             .map(n => '' + n)
-            .concat('+', '-', ',', '%')
+            .concat('+', '-', '.', '%')
             .indexOf(symbol) < 0)
             return undefined;
         return symbol;
@@ -91,23 +92,25 @@ export default class Calculator {
 
 
     evaluate(){
-        const result = eval(this.__state.value.split('%').join('*0.01'));
+        this.__state.value = this.__state.value.replace(/[+\-*\/]*$/g,'');
+        let result = eval(this.__state.value.split('%').join('*0.01'));
         if(isFinite(result)) {
+            result = Math.round(result * this.precision)/this.precision;
             this.__state = {state: result ? 1 : 0, value: result.toString()};
             return 'OK';
         }
         else {
-            this.__state = {state: -1, value: 'Error'};
+            this.__state = {state: 9, value: 'Error'};
             return 'ERROR';
         }
     }
 
     invert(){
-        const regex = /([\+\-\*\/]+)([^\+\-\*\/]*)$/;
+        const regex = /([+\-*\/]+)([^+\-*\/]*)$/;
         const lastSymbols = this.__state.value.match(regex);
         if (lastSymbols == null)
             this.__state.value = '-' + this.__state.value;
-        else if (lastSymbols.index == 0)
+        else if (lastSymbols.index === 0)
             this.__state.value = this.__state.value.substr(1);
         else {
             let termPos = lastSymbols[1].indexOf('-');

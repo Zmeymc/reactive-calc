@@ -6,6 +6,7 @@ export default class HistoryManager {
     constructor(store){
         this.store = store;
         this.identifier = sessions.getCookie('id');
+        this.silent = false;
     }
 
     setLoading(method,value){
@@ -13,7 +14,8 @@ export default class HistoryManager {
     }
 
     pushError(msg, description){
-        this.store.dispatch({type: 'ADD_ERROR', value: msg});
+        !this.silent &&
+            this.store.dispatch({type: 'ADD_ERROR', value: msg});
         if(description)
             console.log(description);
     }
@@ -22,7 +24,6 @@ export default class HistoryManager {
     async pushHistory(expression){
         await this.setLoading('pushHistory',true);
         try {
-
             const id = await this.getIdentifier();
             let error;
             await api.pushHistory(id, expression)
@@ -88,8 +89,10 @@ export default class HistoryManager {
 
 
     async getIdentifier() {
+        this.silent = true;
         if (!this.identifier)
             await this.createHistory();
+        this.silent = false;
         return this.identifier
     }
 

@@ -133,11 +133,15 @@ body {
     margin: 0;
     height: 50px;
     color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .display-text{
-    margin: 0;
-    font-size: 46px;
+    margin: 0 -5px;
+    padding: 0 5px;
+    font-size: 50px;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }

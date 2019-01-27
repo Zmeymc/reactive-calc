@@ -91,6 +91,8 @@ export const ButtonDefinitions= [
 const endingRegex = (n)=> new RegExp(".{"+n+","+n+"}$",'g');
 const append = (value,sym) => value + sym;
 const replace = (value,sym) => value.replace(endingRegex(1) ,sym);
+const put = (value,sym) => sym;
+const setZero = () => '0';
 const replace2sym = (value,sym) => value.replace(endingRegex(2) ,sym);
 const appendAfterZero = (value,sym) => value + '0' + sym;
 export const calculatorStates = {
@@ -233,8 +235,25 @@ export const calculatorStates = {
         '+':{toState:5, apply:replace2sym},
         '*':{toState:7, apply:replace2sym},
         '/':{toState:7, apply:replace2sym},
-    }
-
+    },
+    9:{
+        '0':{toState:0, apply:put},
+        '1':{toState:1, apply:put},
+        '2':{toState:1, apply:put},
+        '3':{toState:1, apply:put},
+        '4':{toState:1, apply:put},
+        '5':{toState:1, apply:put},
+        '6':{toState:1, apply:put},
+        '7':{toState:1, apply:put},
+        '8':{toState:1, apply:put},
+        '9':{toState:1, apply:put},
+        '.':{toState:0, apply:setZero},
+        '+':{toState:0, apply:setZero},
+        '-':{toState:0, apply:setZero},
+        '*':{toState:0, apply:setZero},
+        '/':{toState:0, apply:setZero},
+        '%':{toState:0, apply:setZero}
+    },
 };
 
 export const Errors = {

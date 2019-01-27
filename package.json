@@ -4,15 +4,15 @@
   "description": "Material Design calculator on React/Redux",
   "main": "index.jsx",
   "scripts": {
-    "clean":"rm -rf dist/*",
+    "clean":"rm -rf dist && mkdir dist",
     "clean_modules":"rm -rf node_modules/*",
     "reload_modules": "npm run clean_modules && npm install",
     "build:html": "cp src/html/* dist/",
     "build:webpack": "webpack --mode production",
     "build": "npm run build:html && npm run build:webpack",
+    "rebuild": "npm run clean && npm run build",
     "start": "npm run build:html && webpack-dev-server --mode development --open",
-    "publish": "npm run build && webpack-dev-server --mode production --host 0.0.0.0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm run rebuild && webpack-dev-server --mode production --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
